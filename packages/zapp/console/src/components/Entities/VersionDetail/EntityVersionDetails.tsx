@@ -9,6 +9,7 @@ import { WorkflowId } from 'models/Workflow/types';
 import { entitySections } from 'components/Entities/constants';
 import { EntityDetailsHeader } from 'components/Entities/EntityDetailsHeader';
 import { EntityVersions } from 'components/Entities/EntityVersions';
+import { typeNameToEntityResource } from '../constants';
 
 const useStyles = makeStyles((_theme: Theme) => ({
   verionDetailsContatiner: {
@@ -36,8 +37,9 @@ const useStyles = makeStyles((_theme: Theme) => ({
 interface WorkflowVersionDetailsRouteParams {
   projectId: string;
   domainId: string;
-  workflowName: string;
-  workflowVersion: string;
+  entityType: string;
+  entityName: string;
+  entityVersion: string;
 }
 
 /**
@@ -49,18 +51,19 @@ interface WorkflowVersionDetailsRouteParams {
 const WorkflowVersionDetailsContainer: React.FC<WorkflowVersionDetailsRouteParams> = ({
   projectId,
   domainId,
-  workflowName,
-  workflowVersion,
+  entityType,
+  entityName,
+  entityVersion,
 }) => {
   const workflowId = React.useMemo<WorkflowId>(
     () => ({
-      resourceType: ResourceType.WORKFLOW,
+      resourceType: typeNameToEntityResource[entityType],
       project: projectId,
       domain: domainId,
-      name: workflowName,
-      version: workflowVersion,
+      name: entityName,
+      version: entityVersion,
     }),
-    [projectId, domainId, workflowName, workflowVersion],
+    [entityType, projectId, domainId, entityName, entityVersion],
   );
 
   const id = workflowId as ResourceIdentifier;

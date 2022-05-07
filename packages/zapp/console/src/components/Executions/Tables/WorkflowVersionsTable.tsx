@@ -41,7 +41,9 @@ export const WorkflowVersionsTable: React.FC<WorkflowVersionsTableProps> = (prop
   const handleClickRow = React.useCallback(
     ({ project, name, domain, version }: Identifier) =>
       () => {
-        history.push(Routes.WorkflowVersionDetails.makeUrl(project, domain, name, version));
+        history.push(
+          Routes.EntityVersionDetails.makeUrl(project, domain, name, 'workflow', version),
+        );
       },
     [],
   );

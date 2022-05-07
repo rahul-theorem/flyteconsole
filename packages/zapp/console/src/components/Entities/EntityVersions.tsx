@@ -64,19 +64,23 @@ export const EntityVersions: React.FC<EntityVersionsProps> = ({ id, showAll = fa
     [id, resourceType],
   );
 
-  const versions = useEntityVersions(id, {
-    sort,
-    filter: baseFilters,
-    limit: showAll ? 100 : WorkflowVersionsTablePageSize,
-  });
+  const versions = useEntityVersions(
+    { ...id, version: '' },
+    {
+      sort,
+      filter: baseFilters,
+      limit: showAll ? 100 : WorkflowVersionsTablePageSize,
+    },
+  );
 
   const preventDefault = (e) => e.preventDefault();
   const handleViewAll = React.useCallback(() => {
     history.push(
-      Routes.WorkflowVersionDetails.makeUrl(
+      Routes.EntityVersionDetails.makeUrl(
         project,
         domain,
         name,
+        entityStrings[id.resourceType],
         versions.value[0].id.version ?? '',
       ),
     );
