@@ -2,8 +2,8 @@ import { createLocalizedString } from '@flyteconsole/locale';
 import { startCase } from 'lodash';
 
 const str = {
-  allExecutionsChartTitle: 'All Executions in the Workflow',
-  workflowVersionsTitle: 'Recent Workflow Versions',
+  allExecutionsChartTitle: (typeString: string) => `All Executions in the ${typeString}`,
+  versionsTitle: (typeString: string) => `Recent ${typeString} Versions`,
   viewAll: 'View All',
   schedulesHeader: 'Schedules',
   collapseButton: (showAll: boolean) => (showAll ? 'Collapse' : 'Expand'),

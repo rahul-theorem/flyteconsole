@@ -9,13 +9,13 @@ import { LocalCacheItem, useLocalCache } from 'basics/LocalCache';
 import { WaitForData } from 'components/common/WaitForData';
 import { WorkflowVersionsTable } from 'components/Executions/Tables/WorkflowVersionsTable';
 import { isLoadingState } from 'components/hooks/fetchMachine';
-import { useWorkflowVersions } from 'components/hooks/useWorkflowVersions';
+import { useEntityVersions } from 'components/hooks/Entity/useEntityVersions';
 import { interactiveTextColor } from 'components/Theme/constants';
 import { SortDirection } from 'models/AdminEntity/types';
 import { ResourceIdentifier } from 'models/Common/types';
 import { executionSortFields } from 'models/Execution/constants';
 import { executionFilterGenerator } from './generators';
-import { WorkflowVersionsTablePageSize } from './constants';
+import { WorkflowVersionsTablePageSize, entityStrings } from './constants';
 import t from './strings';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -64,14 +64,11 @@ export const EntityVersions: React.FC<EntityVersionsProps> = ({ id, showAll = fa
     [id, resourceType],
   );
 
-  const versions = useWorkflowVersions(
-    { domain, project },
-    {
-      sort,
-      filter: baseFilters,
-      limit: showAll ? 100 : WorkflowVersionsTablePageSize,
-    },
-  );
+  const versions = useEntityVersions(id, {
+    sort,
+    filter: baseFilters,
+    limit: showAll ? 100 : WorkflowVersionsTablePageSize,
+  });
 
   const preventDefault = (e) => e.preventDefault();
   const handleViewAll = React.useCallback(() => {
@@ -103,7 +100,7 @@ export const EntityVersions: React.FC<EntityVersionsProps> = ({ id, showAll = fa
             {showTable ? <ExpandLess /> : <ExpandMore />}
           </IconButton>
           <Typography className={styles.header} variant="h6">
-            {t('workflowVersionsTitle')}
+            {t('versionsTitle', entityStrings[id.resourceType])}
           </Typography>
           <Typography className={styles.viewAll} variant="body1" onClick={handleViewAll}>
             {t('viewAll')}

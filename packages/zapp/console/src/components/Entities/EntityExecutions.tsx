@@ -15,6 +15,8 @@ import { executionSortFields } from 'models/Execution/constants';
 import { compact } from 'lodash';
 import { useOnlyMyExecutionsFilterState } from 'components/Executions/filters/useOnlyMyExecutionsFilterState';
 import { executionFilterGenerator } from './generators';
+import { entityStrings } from './constants';
+import t from './strings';
 
 const useStyles = makeStyles((theme: Theme) => ({
   filtersContainer: {
@@ -77,7 +79,7 @@ export const EntityExecutions: React.FC<EntityExecutionsProps> = ({
   return (
     <>
       <Typography className={styles.header} variant="h6">
-        All Executions in the Workflow
+        {t('allExecutionsChartTitle', entityStrings[id.resourceType])}
       </Typography>
       <div className={styles.filtersContainer}>
         <ExecutionFilters
