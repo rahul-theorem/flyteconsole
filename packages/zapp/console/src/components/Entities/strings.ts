@@ -2,8 +2,8 @@ import { createLocalizedString } from '@flyteconsole/locale';
 import { startCase } from 'lodash';
 
 const str = {
-  allExecutionsChartTitle: (typeString: string) => `All Executions in the ${typeString}`,
-  versionsTitle: (typeString: string) => `Recent ${typeString} Versions`,
+  allExecutionsChartTitle: (typeString: string) => `All Executions in the ${startCase(typeString)}`,
+  versionsTitle: (typeString: string) => `Recent ${startCase(typeString)} Versions`,
   viewAll: 'View All',
   schedulesHeader: 'Schedules',
   collapseButton: (showAll: boolean) => (showAll ? 'Collapse' : 'Expand'),

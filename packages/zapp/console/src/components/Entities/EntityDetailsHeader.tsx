@@ -10,7 +10,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { Routes } from 'routes/routes';
 import { LaunchForm } from 'components/Launch/LaunchForm/LaunchForm';
-import { backUrlGenerator } from './generators';
+import { backUrlGenerator, backDetailUrlGenerator } from './generators';
 import { entityStrings } from './constants';
 import t from './strings';
 
@@ -77,7 +77,7 @@ export const EntityDetailsHeader: React.FC<EntityDetailsHeaderProps> = ({
             className={commonStyles.linkUnstyled}
             to={
               backToWorkflow
-                ? Routes.WorkflowDetails.makeUrl(id.project, id.domain, id.name)
+                ? backDetailUrlGenerator[id.resourceType](id)
                 : backUrlGenerator[id.resourceType](id)
             }
           >

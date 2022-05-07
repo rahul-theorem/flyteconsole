@@ -117,6 +117,7 @@ export const EntityVersions: React.FC<EntityVersionsProps> = ({ id, showAll = fa
             {...versions}
             isFetching={isLoadingState(versions.state)}
             versionView={showAll}
+            resourceType={resourceType}
           />
         ) : (
           <div className={styles.divider} />

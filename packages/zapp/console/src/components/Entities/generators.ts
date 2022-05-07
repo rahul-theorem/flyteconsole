@@ -40,3 +40,18 @@ export const backUrlGenerator: {
   [ResourceType.UNSPECIFIED]: workflowListGenerator,
   [ResourceType.WORKFLOW]: workflowListGenerator,
 };
+
+const workflowDetailGenerator = ({ project, domain, name }: ResourceIdentifier) =>
+  Routes.WorkflowDetails.makeUrl(project, domain, name);
+const taskDetailGenerator = ({ project, domain, name }: ResourceIdentifier) =>
+  Routes.TaskDetails.makeUrl(project, domain, name);
+
+export const backDetailUrlGenerator: {
+  [k in ResourceType]: (id: ResourceIdentifier) => string;
+} = {
+  [ResourceType.DATASET]: workflowDetailGenerator,
+  [ResourceType.LAUNCH_PLAN]: workflowDetailGenerator,
+  [ResourceType.TASK]: taskDetailGenerator,
+  [ResourceType.UNSPECIFIED]: workflowDetailGenerator,
+  [ResourceType.WORKFLOW]: workflowDetailGenerator,
+};
