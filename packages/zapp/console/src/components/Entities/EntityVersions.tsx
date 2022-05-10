@@ -64,6 +64,8 @@ export const EntityVersions: React.FC<EntityVersionsProps> = ({ id, showAll = fa
     [id, resourceType],
   );
 
+  // we are getting all the versions for this id
+  // so we don't want to specify which version
   const versions = useEntityVersions(
     { ...id, version: '' },
     {
@@ -85,7 +87,6 @@ export const EntityVersions: React.FC<EntityVersionsProps> = ({ id, showAll = fa
       ),
     );
   }, [project, domain, name, versions]);
-
   return (
     <>
       {!showAll && (

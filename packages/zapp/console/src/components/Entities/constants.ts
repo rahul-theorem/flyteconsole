@@ -1,5 +1,4 @@
 import { ResourceType } from 'models/Common/types';
-import * as _ from 'lodash';
 
 type EntityStringMap = { [k in ResourceType]: string };
 

@@ -46,7 +46,7 @@ const workflowDetailGenerator = ({ project, domain, name }: ResourceIdentifier) 
 const taskDetailGenerator = ({ project, domain, name }: ResourceIdentifier) =>
   Routes.TaskDetails.makeUrl(project, domain, name);
 
-export const backDetailUrlGenerator: {
+export const backToDetailUrlGenerator: {
   [k in ResourceType]: (id: ResourceIdentifier) => string;
 } = {
   [ResourceType.DATASET]: workflowDetailGenerator,

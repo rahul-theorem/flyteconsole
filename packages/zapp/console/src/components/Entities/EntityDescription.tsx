@@ -30,7 +30,7 @@ export const EntityDescription: React.FC<{
   return (
     <>
       <Typography variant="h6">Description</Typography>
-      <Typography variant="body2" className={styles.description}>
+      <Typography variant="body2" component="span" className={styles.description}>
         <WaitForData {...namedEntity} spinnerVariant="none" loadingComponent={Skeleton}>
           <span
             className={classnames({

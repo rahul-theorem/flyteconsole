@@ -9,7 +9,7 @@ import { WorkflowId } from 'models/Workflow/types';
 import { entitySections } from 'components/Entities/constants';
 import { EntityDetailsHeader } from 'components/Entities/EntityDetailsHeader';
 import { EntityVersions } from 'components/Entities/EntityVersions';
-import { typeNameToEntityResource } from '../constants';
+import { typeNameToEntityResource } from './constants';
 
 const useStyles = makeStyles((_theme: Theme) => ({
   verionDetailsContatiner: {
