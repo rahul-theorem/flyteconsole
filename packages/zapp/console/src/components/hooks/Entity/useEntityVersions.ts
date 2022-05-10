@@ -12,9 +12,6 @@ import { EntityType, entityFunctions } from './constants';
 export function useEntityVersions(scope: IdentifierScope, config: RequestConfig) {
   const id = scope as ResourceIdentifier;
   const listEntity = entityFunctions[id.resourceType]?.listEntity;
-  if (!listEntity) {
-    throw new Error(`Can't get list entity for ${entityStrings[id.resourceType]}`);
-  }
 
   return usePagination<EntityType, IdentifierScope>(
     { ...config, cacheItems: true, fetchArg: scope },

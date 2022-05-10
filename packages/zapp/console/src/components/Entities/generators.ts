@@ -30,15 +30,20 @@ const workflowListGenerator = ({ project, domain }: ResourceIdentifier) =>
   Routes.ProjectDetails.sections.workflows.makeUrl(project, domain);
 const taskListGenerator = ({ project, domain }: ResourceIdentifier) =>
   Routes.ProjectDetails.sections.tasks.makeUrl(project, domain);
-const unspecifiedListGenerator = ({ project, domain }: ResourceIdentifier) => '';
+const unspecifiedGenerator = ({ project, domain }: ResourceIdentifier) => {
+  throw new Error('Unspecified Resourcetype.');
+};
+const unimplementedGenerator = ({ project, domain }: ResourceIdentifier) => {
+  throw new Error('Method not implemented.');
+};
 
 export const backUrlGenerator: {
   [k in ResourceType]: (id: ResourceIdentifier) => string;
 } = {
-  [ResourceType.DATASET]: unspecifiedListGenerator,
-  [ResourceType.LAUNCH_PLAN]: unspecifiedListGenerator,
+  [ResourceType.DATASET]: unimplementedGenerator,
+  [ResourceType.LAUNCH_PLAN]: unimplementedGenerator,
   [ResourceType.TASK]: taskListGenerator,
-  [ResourceType.UNSPECIFIED]: unspecifiedListGenerator,
+  [ResourceType.UNSPECIFIED]: unspecifiedGenerator,
   [ResourceType.WORKFLOW]: workflowListGenerator,
 };
 
@@ -46,14 +51,13 @@ const workflowDetailGenerator = ({ project, domain, name }: ResourceIdentifier) 
   Routes.WorkflowDetails.makeUrl(project, domain, name);
 const taskDetailGenerator = ({ project, domain, name }: ResourceIdentifier) =>
   Routes.TaskDetails.makeUrl(project, domain, name);
-const unspecifiedDetailGenerator = ({ project, domain, name }: ResourceIdentifier) => '';
 
 export const backToDetailUrlGenerator: {
   [k in ResourceType]: (id: ResourceIdentifier) => string;
 } = {
-  [ResourceType.DATASET]: unspecifiedDetailGenerator,
-  [ResourceType.LAUNCH_PLAN]: unspecifiedDetailGenerator,
+  [ResourceType.DATASET]: unimplementedGenerator,
+  [ResourceType.LAUNCH_PLAN]: unimplementedGenerator,
   [ResourceType.TASK]: taskDetailGenerator,
-  [ResourceType.UNSPECIFIED]: unspecifiedDetailGenerator,
+  [ResourceType.UNSPECIFIED]: unspecifiedGenerator,
   [ResourceType.WORKFLOW]: workflowDetailGenerator,
 };
