@@ -11,13 +11,13 @@ import { EntityDetailsHeader } from 'components/Entities/EntityDetailsHeader';
 import { EntityVersions } from 'components/Entities/EntityVersions';
 import { typeNameToEntityResource } from './constants';
 
-const useStyles = makeStyles((_theme: Theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   verionDetailsContatiner: {
     display: 'flex',
     flexDirection: 'column',
     flexWrap: 'nowrap',
     overflow: 'hidden',
-    height: `calc(100vh - ${_theme.spacing(1)}rem)`,
+    height: `calc(100vh - ${theme.spacing(1)}rem)`,
   },
   staticGraphContainer: {
     display: 'flex',
