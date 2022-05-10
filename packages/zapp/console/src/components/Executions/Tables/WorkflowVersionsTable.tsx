@@ -38,8 +38,6 @@ export const WorkflowVersionsTable: React.FC<WorkflowVersionsTableProps> = (prop
 
   const columns = useWorkflowVersionsTableColumns();
 
-  const retry = () => props.fetch();
-
   const handleClickRow = React.useCallback(
     ({ project, name, domain, version, resourceType = ResourceType.UNSPECIFIED }: Identifier) =>
       () => {

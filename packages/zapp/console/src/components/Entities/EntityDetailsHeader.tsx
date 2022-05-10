@@ -8,7 +8,6 @@ import { Project } from 'models/Project/types';
 import { getProjectDomain } from 'models/Project/utils';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { Routes } from 'routes/routes';
 import { LaunchForm } from 'components/Launch/LaunchForm/LaunchForm';
 import { backUrlGenerator, backToDetailUrlGenerator } from './generators';
 import { entityStrings } from './constants';
