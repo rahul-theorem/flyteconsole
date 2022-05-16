@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { IconButton, Typography, Tab, Tabs } from '@material-ui/core';
+import { IconButton, Typography, Tab, Tabs, Link } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Close from '@material-ui/icons/Close';
 import ArrowBackIos from '@material-ui/icons/ArrowBackIos';
@@ -26,6 +26,7 @@ import { DumpJSON } from 'components/common/DumpJSON';
 import { dNode } from 'models/Graph/types';
 import { NodeExecutionPhase, TaskExecutionPhase } from 'models/Execution/enums';
 import { transformWorkflowToKeyedDag, getNodeNameFromDag } from 'components/WorkflowGraph/utils';
+import { versionDetailsUrlGenerator } from 'components/Entities/generators';
 import { NodeExecutionCacheStatus } from '../NodeExecutionCacheStatus';
 import { makeListTaskExecutionsQuery, makeNodeExecutionQuery } from '../nodeExecutionQueries';
 import { NodeExecutionDetails } from '../types';
@@ -186,7 +187,7 @@ const WorkflowTabs: React.FC<{
   let tabContent: JSX.Element | null = null;
   const id = nodeId.slice(nodeId.lastIndexOf('-') + 1);
   const taskTemplate = dagData[id]?.value.template;
-
+  console.log('try to debug, ', dagData, taskTemplate);
   switch (tabState.value) {
     case tabIds.inputs: {
       tabContent = taskTemplate ? (
@@ -199,6 +200,7 @@ const WorkflowTabs: React.FC<{
     case tabIds.task: {
       tabContent = taskTemplate ? (
         <PanelSection>
+          <RouterLink to={versionDetailsUrlGenerator(taskTemplate.id)}>Task Detail</RouterLink>
           <DumpJSON value={taskTemplate} />
         </PanelSection>
       ) : null;

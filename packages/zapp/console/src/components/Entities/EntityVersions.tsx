@@ -12,9 +12,9 @@ import { isLoadingState } from 'components/hooks/fetchMachine';
 import { useEntityVersions } from 'components/hooks/Entity/useEntityVersions';
 import { interactiveTextColor } from 'components/Theme/constants';
 import { SortDirection } from 'models/AdminEntity/types';
-import { ResourceIdentifier } from 'models/Common/types';
+import { Identifier, ResourceIdentifier } from 'models/Common/types';
 import { executionSortFields } from 'models/Execution/constants';
-import { executionFilterGenerator } from './generators';
+import { executionFilterGenerator, versionDetailsUrlGenerator } from './generators';
 import { WorkflowVersionsTablePageSize, entityStrings } from './constants';
 import t from './strings';
 
@@ -78,15 +78,14 @@ export const EntityVersions: React.FC<EntityVersionsProps> = ({ id, showAll = fa
   const preventDefault = (e) => e.preventDefault();
   const handleViewAll = React.useCallback(() => {
     history.push(
-      Routes.EntityVersionDetails.makeUrl(
-        project,
-        domain,
-        name,
-        entityStrings[id.resourceType],
-        versions.value[0].id.version ?? '',
-      ),
+      versionDetailsUrlGenerator({
+        ...id,
+        version: versions.value[0].id.version ?? '',
+      } as Identifier),
     );
   }, [project, domain, name, versions]);
+
+  console.log('versions', versions);
   return (
     <>
       {!showAll && (

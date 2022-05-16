@@ -11,6 +11,7 @@ import { EntityDetailsHeader } from 'components/Entities/EntityDetailsHeader';
 import { EntityVersions } from 'components/Entities/EntityVersions';
 import { typeNameToEntityResource } from '../constants';
 import { versionsDetailsSections } from './constants';
+import { EntityVersionDetails } from './EntityVersionDetails';
 
 const useStyles = makeStyles((theme: Theme) => ({
   verionDetailsContatiner: {
@@ -49,7 +50,7 @@ interface WorkflowVersionDetailsRouteParams {
  * @param domainId
  * @param workflowName
  */
-const EntityVersionsDetailsContainer: React.FC<WorkflowVersionDetailsRouteParams> = ({
+const EntityVersionsDetailsContainerImpl: React.FC<WorkflowVersionDetailsRouteParams> = ({
   projectId,
   domainId,
   entityType,
@@ -68,7 +69,8 @@ const EntityVersionsDetailsContainer: React.FC<WorkflowVersionDetailsRouteParams
   );
 
   const id = workflowId as ResourceIdentifier;
-  const sections = entitySections[ResourceType.WORKFLOW];
+  const sections = entitySections[id.resourceType];
+  const versionsSections = versionsDetailsSections[id.resourceType];
   const project = useProject(workflowId.project);
   const styles = useStyles();
 
@@ -81,9 +83,12 @@ const EntityVersionsDetailsContainer: React.FC<WorkflowVersionDetailsRouteParams
         backToWorkflow
       />
       <div className={styles.verionDetailsContatiner}>
-        <div className={styles.staticGraphContainer}>
-          <StaticGraphContainer workflowId={workflowId} />
-        </div>
+        {versionsSections.description && <EntityVersionDetails id={id} />}
+        {versionsSections.graph && (
+          <div className={styles.staticGraphContainer}>
+            <StaticGraphContainer workflowId={workflowId} />
+          </div>
+        )}
         <div className={styles.versionsContainer}>
           <EntityVersions id={id} showAll />
         </div>
@@ -92,6 +97,6 @@ const EntityVersionsDetailsContainer: React.FC<WorkflowVersionDetailsRouteParams
   );
 };
 
-export const EntityVersionsDetails = withRouteParams<WorkflowVersionDetailsRouteParams>(
-  EntityVersionsDetailsContainer,
+export const EntityVersionsDetailsContainer = withRouteParams<WorkflowVersionDetailsRouteParams>(
+  EntityVersionsDetailsContainerImpl,
 );
