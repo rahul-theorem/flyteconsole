@@ -9,7 +9,8 @@ import { WorkflowId } from 'models/Workflow/types';
 import { entitySections } from 'components/Entities/constants';
 import { EntityDetailsHeader } from 'components/Entities/EntityDetailsHeader';
 import { EntityVersions } from 'components/Entities/EntityVersions';
-import { typeNameToEntityResource } from './constants';
+import { typeNameToEntityResource } from '../constants';
+import { versionsDetailsSections } from './constants';
 
 const useStyles = makeStyles((theme: Theme) => ({
   verionDetailsContatiner: {
@@ -48,7 +49,7 @@ interface WorkflowVersionDetailsRouteParams {
  * @param domainId
  * @param workflowName
  */
-const WorkflowVersionDetailsContainer: React.FC<WorkflowVersionDetailsRouteParams> = ({
+const EntityVersionsDetailsContainer: React.FC<WorkflowVersionDetailsRouteParams> = ({
   projectId,
   domainId,
   entityType,
@@ -91,6 +92,6 @@ const WorkflowVersionDetailsContainer: React.FC<WorkflowVersionDetailsRouteParam
   );
 };
 
-export const EntityVersionDetails = withRouteParams<WorkflowVersionDetailsRouteParams>(
-  WorkflowVersionDetailsContainer,
+export const EntityVersionsDetails = withRouteParams<WorkflowVersionDetailsRouteParams>(
+  EntityVersionsDetailsContainer,
 );
