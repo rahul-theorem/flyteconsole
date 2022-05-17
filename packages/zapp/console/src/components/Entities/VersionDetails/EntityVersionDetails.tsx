@@ -33,7 +33,7 @@ export interface EntityExecutionsProps {
 export const EntityVersionDetails: React.FC<EntityExecutionsProps> = ({ id }) => {
   const styles = useStyles();
 
-  // TODO: need to be generic for supporting other type like workflow, etc.
+  // NOTE: need to be generic for supporting other type like workflow, etc.
   const templateState = useTaskTemplate(id as Identifier);
 
   const template = templateState?.value?.closure?.compiledTask?.template;
@@ -50,20 +50,17 @@ export const EntityVersionDetails: React.FC<EntityExecutionsProps> = ({ id }) =>
         <div className={styles.table}>
           {image && (
             <Row title={t('imageFieldName')}>
-              {' '}
-              <Typography>{image}</Typography>{' '}
+              <Typography>{image}</Typography>
             </Row>
           )}
           {envVars && (
             <Row title={t('envVarsFieldName')}>
-              {' '}
-              <EnvVarsTable rows={envVars} />{' '}
+              <EnvVarsTable rows={envVars} />
             </Row>
           )}
           {template && (
             <Row title={t('commandsFieldName')}>
-              {' '}
-              <DumpJSON value={template} />{' '}
+              <DumpJSON value={template} />
             </Row>
           )}
         </div>

@@ -1,27 +1,19 @@
 import { createLocalizedString } from '@flyteconsole/locale';
-import { startCase } from 'lodash';
-
-const launchStrings = (typeString: string) => `Launch ${startCase(typeString)}`;
-const noDescription = (typeString: string) => `This ${typeString} has no description.`;
-const noSchedules = (typeString: string) => `This ${typeString} has no schedules.`;
-const allExecutionsChartTitle = (typeString: string) =>
-  `All Executions in the ${startCase(typeString)}`;
-const versionsTitle = (typeString: string) => `Recent ${startCase(typeString)} Versions`;
 
 const str = {
   viewAll: 'View All',
   schedulesHeader: 'Schedules',
   collapseButton: (showAll: boolean) => (showAll ? 'Collapse' : 'Expand'),
-  launchStrings_workflow: launchStrings('Workflow'),
-  launchStrings_task: launchStrings('Task'),
-  noDescription_workflow: noDescription('Workflow'),
-  noDescription_task: noDescription('Task'),
-  noSchedules_workflow: noSchedules('Workflow'),
-  noSchedules_task: noSchedules('Task'),
-  allExecutionsChartTitle_workflow: allExecutionsChartTitle('Workflow'),
-  allExecutionsChartTitle_task: allExecutionsChartTitle('Task'),
-  versionsTitle_workflow: versionsTitle('Workflow'),
-  versionsTitle_task: versionsTitle('Task'),
+  launchStrings_workflow: 'Launch Workflow',
+  launchStrings_task: 'Launch Task',
+  noDescription_workflow: 'This workflow has no description.',
+  noDescription_task: 'This task has no description.',
+  noSchedules_workflow: 'This workflow has no schedules.',
+  noSchedules_task: 'This task has no schedules.',
+  allExecutionsChartTitle_workflow: 'All Executions in the Workflow',
+  allExecutionsChartTitle_task: 'All Execuations in the Task',
+  versionsTitle_workflow: 'Recent Workflow Versions',
+  versionsTitle_task: 'Recent Task Versions',
   details_task: 'Task Details',
   inputsFieldName: 'Inputs',
   outputsFieldName: 'Outputs',

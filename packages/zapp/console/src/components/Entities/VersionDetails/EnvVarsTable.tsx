@@ -42,14 +42,13 @@ export default function EnvVarsTable({ rows }: EnvVarsTableProps) {
         <TableHead>
           <TableRow>
             <TableCell>
-              {' '}
               <Typography className={styles.headerText} variant="h4">
-                {t('key')}{' '}
+                {t('key')}
               </Typography>
             </TableCell>
             <TableCell>
               <Typography className={styles.headerText} variant="h4">
-                {t('value')}{' '}
+                {t('value')}
               </Typography>
             </TableCell>
           </TableRow>

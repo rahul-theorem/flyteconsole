@@ -40,10 +40,7 @@ const InputsAndOuputs: React.FC<{
     direction: SortDirection.DESCENDING,
   };
 
-  const baseFilters = React.useMemo(
-    () => executionFilterGenerator[id.resourceType](id),
-    [id, id.resourceType],
-  );
+  const baseFilters = executionFilterGenerator[id.resourceType](id);
 
   // to render the input and output,
   // need to fetch the latest version and get the input and ouptut data
