@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Routes } from 'routes/routes';
 import { history } from 'routes/history';
 import Typography from '@material-ui/core/Typography';
 import { IconButton, makeStyles, Theme } from '@material-ui/core';
@@ -7,7 +6,7 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import { LocalCacheItem, useLocalCache } from 'basics/LocalCache';
 import { WaitForData } from 'components/common/WaitForData';
-import { WorkflowVersionsTable } from 'components/Executions/Tables/WorkflowVersionsTable';
+import { EntityVersionsTable } from 'components/Executions/Tables/EntityVersionsTable';
 import { isLoadingState } from 'components/hooks/fetchMachine';
 import { useEntityVersions } from 'components/hooks/Entity/useEntityVersions';
 import { interactiveTextColor } from 'components/Theme/constants';
@@ -16,7 +15,7 @@ import { Identifier, ResourceIdentifier } from 'models/Common/types';
 import { executionSortFields } from 'models/Execution/constants';
 import { executionFilterGenerator, versionDetailsUrlGenerator } from './generators';
 import { WorkflowVersionsTablePageSize, entityStrings } from './constants';
-import t from './strings';
+import t, { patternKey } from './strings';
 
 const useStyles = makeStyles((theme: Theme) => ({
   headerContainer: {
@@ -85,7 +84,6 @@ export const EntityVersions: React.FC<EntityVersionsProps> = ({ id, showAll = fa
     );
   }, [project, domain, name, versions]);
 
-  console.log('versions', versions);
   return (
     <>
       {!showAll && (
@@ -103,8 +101,8 @@ export const EntityVersions: React.FC<EntityVersionsProps> = ({ id, showAll = fa
           >
             {showTable ? <ExpandLess /> : <ExpandMore />}
           </IconButton>
-          <Typography className={styles.header} variant="h6">
-            {t('versionsTitle', entityStrings[id.resourceType])}
+          <Typography className={styles.header} variant="h3">
+            {t(patternKey('versionsTitle', entityStrings[id.resourceType]))}
           </Typography>
           <Typography className={styles.viewAll} variant="body1" onClick={handleViewAll}>
             {t('viewAll')}
@@ -113,7 +111,7 @@ export const EntityVersions: React.FC<EntityVersionsProps> = ({ id, showAll = fa
       )}
       <WaitForData {...versions}>
         {showTable || showAll ? (
-          <WorkflowVersionsTable
+          <EntityVersionsTable
             {...versions}
             isFetching={isLoadingState(versions.state)}
             versionView={showAll}

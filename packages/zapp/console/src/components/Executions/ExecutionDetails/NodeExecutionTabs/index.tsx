@@ -10,6 +10,7 @@ import { isMapTaskType } from 'models/Task/utils';
 import { TaskExecutionPhase } from 'models/Execution/enums';
 import { Link as RouterLink } from 'react-router-dom';
 import { versionDetailsUrlGenerator } from 'components/Entities/generators';
+import t from 'components/Entities/strings';
 import { TaskExecutionsList } from '../../TaskExecutionsList/TaskExecutionsList';
 import { NodeExecutionInputs } from './NodeExecutionInputs';
 import { NodeExecutionOutputs } from './NodeExecutionOutputs';
@@ -56,7 +57,6 @@ export const NodeExecutionTabs: React.FC<{
       /* */
     }, defaultTab);
   }
-  console.log('try to debug, ', tabState, taskTemplate);
 
   let tabContent: JSX.Element | null = null;
   switch (tabState.value) {
@@ -75,7 +75,9 @@ export const NodeExecutionTabs: React.FC<{
     case tabIds.task: {
       tabContent = taskTemplate ? (
         <PanelSection>
-          <RouterLink to={versionDetailsUrlGenerator(taskTemplate.id)}>Task Detail</RouterLink>
+          <RouterLink to={versionDetailsUrlGenerator(taskTemplate.id)}>
+            {t('details_task')}
+          </RouterLink>
           <DumpJSON value={taskTemplate} />
         </PanelSection>
       ) : null;

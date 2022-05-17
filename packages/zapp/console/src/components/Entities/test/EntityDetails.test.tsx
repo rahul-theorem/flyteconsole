@@ -30,7 +30,7 @@ describe('EntityDetails', () => {
   const renderDetails = (id: ResourceIdentifier) => {
     return render(
       <MemoryRouter>
-        <EntityDetails id={id}></EntityDetails>
+        <EntityDetails id={id} />
       </MemoryRouter>,
     );
   };

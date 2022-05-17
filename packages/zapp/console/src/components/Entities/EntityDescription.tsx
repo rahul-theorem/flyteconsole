@@ -4,24 +4,31 @@ import classnames from 'classnames';
 import { useCommonStyles } from 'components/common/styles';
 import { WaitForData } from 'components/common/WaitForData';
 import { useNamedEntity } from 'components/hooks/useNamedEntity';
-import { NamedEntityMetadata, ResourceIdentifier, ResourceType } from 'models/Common/types';
+import { NamedEntityMetadata, ResourceIdentifier } from 'models/Common/types';
 import * as React from 'react';
 import reactLoadingSkeleton from 'react-loading-skeleton';
-import { DumpJSON } from 'components/common/DumpJSON';
+import { ReactJsonViewWrapper } from 'components/common/ReactJsonView';
 import { useEntityVersions } from 'components/hooks/Entity/useEntityVersions';
 import { executionSortFields } from 'models/Execution/constants';
 import { SortDirection } from 'models/AdminEntity/types';
 import { TaskClosure } from 'models/Task/types';
-import { executionFilterGenerator, versionDetailsUrlGenerator } from './generators';
+import { executionFilterGenerator } from './generators';
 import { Row } from './Row';
-import t from './strings';
-import { entityStrings } from './constants';
+import t, { patternKey } from './strings';
+import { entityStrings, entitySections } from './constants';
 
 const Skeleton = reactLoadingSkeleton;
 
 const useStyles = makeStyles((theme: Theme) => ({
+  header: {
+    marginBottom: theme.spacing(1),
+  },
   description: {
     marginTop: theme.spacing(1),
+  },
+  divider: {
+    borderBottom: `1px solid ${theme.palette.divider}`,
+    marginBottom: theme.spacing(1),
   },
 }));
 
@@ -56,13 +63,13 @@ const InputsAndOuputs: React.FC<{
   return (
     <WaitForData {...versions}>
       {inputs && (
-        <Row key="input" title="Inputs">
-          <DumpJSON value={inputs}></DumpJSON>
+        <Row title={t('inputsFieldName')}>
+          <ReactJsonViewWrapper src={inputs} shouldCollapse={(field) => !field?.name} />
         </Row>
       )}
       {outputs && (
-        <Row key="output" title="Outputs">
-          <DumpJSON value={outputs}></DumpJSON>
+        <Row title={t('outputsFieldName')}>
+          <ReactJsonViewWrapper src={outputs} shouldCollapse={(field) => !field?.name} />
         </Row>
       )}
     </WaitForData>
@@ -77,23 +84,29 @@ export const EntityDescription: React.FC<{
   const namedEntity = useNamedEntity(id);
   const { metadata = {} as NamedEntityMetadata } = namedEntity.value;
   const hasDescription = !!metadata.description;
+  const sections = entitySections[id.resourceType];
 
   return (
     <>
-      <Typography variant="h6">Description</Typography>
+      <Typography className={styles.header} variant="h3">
+        {t('basicInformation')}
+      </Typography>
+      <div className={styles.divider} />
       <Typography variant="body2" component="span" className={styles.description}>
         <WaitForData {...namedEntity} spinnerVariant="none" loadingComponent={Skeleton}>
-          <span
-            className={classnames({
-              [commonStyles.hintText]: !hasDescription,
-            })}
-          >
-            {hasDescription
-              ? metadata.description
-              : t('noDescription', entityStrings[id.resourceType])}
-          </span>
+          <Row title={t('description')}>
+            <span
+              className={classnames({
+                [commonStyles.hintText]: !hasDescription,
+              })}
+            >
+              {hasDescription
+                ? metadata.description
+                : t(patternKey('noDescription', entityStrings[id.resourceType]))}
+            </span>
+          </Row>
         </WaitForData>
-        {id.resourceType == ResourceType.TASK && <InputsAndOuputs id={id} />}
+        {sections?.descriptionInputsAndOutputs && <InputsAndOuputs id={id} />}
       </Typography>
     </>
   );

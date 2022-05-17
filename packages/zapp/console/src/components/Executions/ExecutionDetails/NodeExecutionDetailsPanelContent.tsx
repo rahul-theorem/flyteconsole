@@ -27,6 +27,7 @@ import { dNode } from 'models/Graph/types';
 import { NodeExecutionPhase, TaskExecutionPhase } from 'models/Execution/enums';
 import { transformWorkflowToKeyedDag, getNodeNameFromDag } from 'components/WorkflowGraph/utils';
 import { versionDetailsUrlGenerator } from 'components/Entities/generators';
+import t from 'components/Entities/strings';
 import { NodeExecutionCacheStatus } from '../NodeExecutionCacheStatus';
 import { makeListTaskExecutionsQuery, makeNodeExecutionQuery } from '../nodeExecutionQueries';
 import { NodeExecutionDetails } from '../types';
@@ -187,7 +188,6 @@ const WorkflowTabs: React.FC<{
   let tabContent: JSX.Element | null = null;
   const id = nodeId.slice(nodeId.lastIndexOf('-') + 1);
   const taskTemplate = dagData[id]?.value.template;
-  console.log('try to debug, ', dagData, taskTemplate);
   switch (tabState.value) {
     case tabIds.inputs: {
       tabContent = taskTemplate ? (
@@ -200,7 +200,9 @@ const WorkflowTabs: React.FC<{
     case tabIds.task: {
       tabContent = taskTemplate ? (
         <PanelSection>
-          <RouterLink to={versionDetailsUrlGenerator(taskTemplate.id)}>Task Detail</RouterLink>
+          <RouterLink to={versionDetailsUrlGenerator(taskTemplate.id)}>
+            {t('details_task')}
+          </RouterLink>
           <DumpJSON value={taskTemplate} />
         </PanelSection>
       ) : null;

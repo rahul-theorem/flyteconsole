@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { noWorkflowVersionsFoundString } from 'common/constants';
+import { noVersionsFoundString } from 'common/constants';
 import { useCommonStyles } from 'components/common/styles';
 import { ListProps } from 'components/common/types';
 import PaginatedDataList from 'components/Tables/PaginatedDataList';
@@ -15,12 +15,12 @@ import { useWorkflowExecutionsTableState } from './useWorkflowExecutionTableStat
 import { useWorkflowVersionsTableColumns } from './useWorkflowVersionsTableColumns';
 import { WorkflowVersionRow } from './WorkflowVersionRow';
 
-interface WorkflowVersionsTableProps extends ListProps<Workflow> {
+interface EntityVersionsTableProps extends ListProps<Workflow> {
   versionView?: boolean;
   resourceType: ResourceType;
 }
 
-interface WorkflowVersionRouteParams {
+interface EntityVersionRouteParams {
   entityVersion: string;
 }
 
@@ -29,12 +29,12 @@ interface WorkflowVersionRouteParams {
  * @param props
  * @constructor
  */
-export const WorkflowVersionsTable: React.FC<WorkflowVersionsTableProps> = (props) => {
-  const { value: workflows, versionView, resourceType } = props;
+export const EntityVersionsTable: React.FC<EntityVersionsTableProps> = (props) => {
+  const { value: versions, versionView, resourceType } = props;
   const state = useWorkflowExecutionsTableState();
   const commonStyles = useCommonStyles();
   const tableStyles = useExecutionTableStyles();
-  const { entityVersion } = useParams<WorkflowVersionRouteParams>();
+  const { entityVersion } = useParams<EntityVersionRouteParams>();
 
   const columns = useWorkflowVersionsTableColumns();
 
@@ -60,7 +60,7 @@ export const WorkflowVersionsTable: React.FC<WorkflowVersionsTableProps> = (prop
       workflow={row}
       state={state}
       versionView={versionView}
-      onClick={versionView ? handleClickRow({ ...row.id, resourceType }) : undefined}
+      onClick={handleClickRow({ ...row.id, resourceType })}
       isChecked={entityVersion === row.id.version}
       key={`workflow-version-row-${row.id.version}`}
     />
@@ -70,11 +70,11 @@ export const WorkflowVersionsTable: React.FC<WorkflowVersionsTableProps> = (prop
     <div className={classnames(tableStyles.tableContainer, commonStyles.flexFill)}>
       <PaginatedDataList
         columns={columns}
-        data={workflows}
+        data={versions}
         rowRenderer={rowRenderer}
-        totalRows={workflows.length}
+        totalRows={versions.length}
         showRadioButton={versionView}
-        noDataString={noWorkflowVersionsFoundString}
+        noDataString={noVersionsFoundString}
         fillEmptyRows={false}
       />
     </div>

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Typography } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
+import { COLOR_SPECTRUM } from 'components/Theme/colorSpectrum';
 
 const useStyles = makeStyles((theme: Theme) => ({
   row: {
@@ -9,7 +10,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   title: {
     width: 100,
-    color: '#B3B3B3',
+    color: COLOR_SPECTRUM.gray25.color,
   },
 }));
 

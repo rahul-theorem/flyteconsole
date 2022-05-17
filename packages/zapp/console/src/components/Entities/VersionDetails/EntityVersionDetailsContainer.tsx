@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { withRouteParams } from 'components/common/withRouteParams';
-import { ResourceIdentifier, ResourceType } from 'models/Common/types';
+import { ResourceIdentifier } from 'models/Common/types';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { WaitForData } from 'components/common/WaitForData';
 import { useProject } from 'components/hooks/useProjects';
@@ -14,18 +14,27 @@ import { versionsDetailsSections } from './constants';
 import { EntityVersionDetails } from './EntityVersionDetails';
 
 const useStyles = makeStyles((theme: Theme) => ({
-  verionDetailsContatiner: {
+  verionDetailsContainer: {
+    marginTop: theme.spacing(2),
     display: 'flex',
     flexDirection: 'column',
     flexWrap: 'nowrap',
     overflow: 'hidden',
-    height: `calc(100vh - ${theme.spacing(1)}rem)`,
+    height: `calc(100vh - ${theme.spacing(17)}px)`,
   },
   staticGraphContainer: {
     display: 'flex',
     height: '60%',
     width: '100%',
     flex: '1',
+  },
+  versionDetailsContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '55%',
+    width: '100%',
+    flex: '1',
+    overflowY: 'scroll',
   },
   versionsContainer: {
     display: 'flex',
@@ -82,8 +91,12 @@ const EntityVersionsDetailsContainerImpl: React.FC<WorkflowVersionDetailsRoutePa
         launchable={sections.launch}
         backToWorkflow
       />
-      <div className={styles.verionDetailsContatiner}>
-        {versionsSections.description && <EntityVersionDetails id={id} />}
+      <div className={styles.verionDetailsContainer}>
+        {versionsSections.details && (
+          <div className={styles.versionDetailsContainer}>
+            <EntityVersionDetails id={id} />
+          </div>
+        )}
         {versionsSections.graph && (
           <div className={styles.staticGraphContainer}>
             <StaticGraphContainer workflowId={workflowId} />

@@ -26,6 +26,7 @@ interface EntitySectionsFlags {
   launch?: boolean;
   schedules?: boolean;
   versions?: boolean;
+  descriptionInputsAndOutputs?: boolean;
 }
 
 export const entitySections: { [k in ResourceType]: EntitySectionsFlags } = {
@@ -36,7 +37,13 @@ export const entitySections: { [k in ResourceType]: EntitySectionsFlags } = {
     launch: true,
     schedules: true,
   },
-  [ResourceType.TASK]: { description: true, executions: true, launch: true, versions: true },
+  [ResourceType.TASK]: {
+    description: true,
+    executions: true,
+    launch: true,
+    versions: true,
+    descriptionInputsAndOutputs: true,
+  },
   [ResourceType.UNSPECIFIED]: { description: true },
   [ResourceType.WORKFLOW]: {
     description: true,

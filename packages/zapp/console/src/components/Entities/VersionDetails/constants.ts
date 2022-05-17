@@ -1,29 +1,29 @@
 import { ResourceType } from 'models/Common/types';
 
 interface VersionsDetailsSectionsFlags {
-  description: boolean;
+  details: boolean;
   graph: boolean;
 }
 
 export const versionsDetailsSections: { [k in ResourceType]: VersionsDetailsSectionsFlags } = {
   [ResourceType.DATASET]: {
-    description: false,
+    details: false,
     graph: false,
   },
   [ResourceType.LAUNCH_PLAN]: {
-    description: false,
+    details: false,
     graph: false,
   },
   [ResourceType.TASK]: {
-    description: true,
+    details: true,
     graph: false,
   },
   [ResourceType.UNSPECIFIED]: {
-    description: false,
+    details: false,
     graph: false,
   },
   [ResourceType.WORKFLOW]: {
-    description: false,
+    details: false,
     graph: true,
   },
 };

@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 import { LaunchForm } from 'components/Launch/LaunchForm/LaunchForm';
 import { backUrlGenerator, backToDetailUrlGenerator } from './generators';
 import { entityStrings } from './constants';
-import t from './strings';
+import t, { patternKey } from './strings';
 
 const useStyles = makeStyles((theme: Theme) => ({
   headerContainer: {
@@ -92,7 +92,7 @@ export const EntityDetailsHeader: React.FC<EntityDetailsHeaderProps> = ({
               onClick={() => setShowLaunchForm(true)}
               variant="contained"
             >
-              {t('launchStrings', entityStrings[id.resourceType])}
+              {t(patternKey('launchStrings', entityStrings[id.resourceType]))}
             </Button>
           ) : null}
         </div>

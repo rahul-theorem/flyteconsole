@@ -5,23 +5,23 @@ import { contentMarginGridUnits } from 'common/layout';
 import { WaitForData } from 'components/common/WaitForData';
 import { useTaskTemplate } from 'components/hooks/useTask';
 import { ResourceIdentifier, Identifier } from 'models/Common/types';
-import { compact } from 'lodash';
-import { useOnlyMyExecutionsFilterState } from 'components/Executions/filters/useOnlyMyExecutionsFilterState';
 import { DumpJSON } from 'components/common/DumpJSON';
 import { Row } from '../Row';
-import BasicTable from '../EnvVars';
+import EnvVarsTable from './EnvVarsTable';
+import t, { patternKey } from '../strings';
+import { entityStrings } from '../constants';
 
 const useStyles = makeStyles((theme: Theme) => ({
-  container: {
-    maxHeight: 500,
-    overflow: 'scroll',
-  },
   header: {
     marginBottom: theme.spacing(1),
     marginLeft: theme.spacing(contentMarginGridUnits),
   },
   table: {
     marginLeft: theme.spacing(contentMarginGridUnits),
+  },
+  divider: {
+    borderBottom: `1px solid ${theme.palette.divider}`,
+    marginBottom: theme.spacing(1),
   },
 }));
 
@@ -41,33 +41,33 @@ export const EntityVersionDetails: React.FC<EntityExecutionsProps> = ({ id }) =>
   const image = template?.container?.image;
 
   return (
-    <div className={styles.container}>
-      <Typography className={styles.header} variant="h6">
-        Task Details
+    <>
+      <Typography className={styles.header} variant="h3">
+        {t(patternKey('details', entityStrings[id.resourceType]))}
       </Typography>
+      <div className={styles.divider} />
       <WaitForData {...templateState}>
         <div className={styles.table}>
           {image && (
-            <Row key="Image" title="Image">
+            <Row title={t('imageFieldName')}>
               {' '}
               <Typography>{image}</Typography>{' '}
             </Row>
           )}
           {envVars && (
-            <Row key="envVars" title="Env vars">
+            <Row title={t('envVarsFieldName')}>
               {' '}
-              <BasicTable rows={envVars} />{' '}
+              <EnvVarsTable rows={envVars} />{' '}
             </Row>
           )}
-
           {template && (
-            <Row key="commands" title="Comands">
+            <Row title={t('commandsFieldName')}>
               {' '}
               <DumpJSON value={template} />{' '}
             </Row>
           )}
         </div>
       </WaitForData>
-    </div>
+    </>
   );
 };

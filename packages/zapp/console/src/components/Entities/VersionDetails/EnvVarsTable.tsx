@@ -10,31 +10,31 @@ import {
   Paper,
 } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import { contentMarginGridUnits } from 'common/layout';
 import { Core } from 'flyteidl';
+import { COLOR_SPECTRUM } from 'components/Theme/colorSpectrum';
+import t from '../strings';
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
     marginBottom: theme.spacing(1),
+    ['& .MuiTableCell-sizeSmall']: {
+      paddingLeft: 0,
+    },
   },
   headerText: {
-    fontWeight: 700,
-    color: '#B3B3B3',
-  },
-  table: {
-    marginLeft: theme.spacing(contentMarginGridUnits),
+    color: COLOR_SPECTRUM.gray25.color,
   },
 }));
 
-interface MyProps {
+interface EnvVarsTableProps {
   rows: Core.IKeyValuePair[];
 }
 
-export default function BasicTable({ rows }: MyProps) {
+export default function EnvVarsTable({ rows }: EnvVarsTableProps) {
   const styles = useStyles();
 
   if (!rows || rows.length == 0) {
-    return <Typography>Empty</Typography>;
+    return <Typography>{t('empty')}</Typography>;
   }
   return (
     <TableContainer className={styles.container} component={Paper}>
@@ -43,10 +43,14 @@ export default function BasicTable({ rows }: MyProps) {
           <TableRow>
             <TableCell>
               {' '}
-              <Typography className={styles.headerText}>Key </Typography>
+              <Typography className={styles.headerText} variant="h4">
+                {t('key')}{' '}
+              </Typography>
             </TableCell>
             <TableCell>
-              <Typography className={styles.headerText}>Value </Typography>
+              <Typography className={styles.headerText} variant="h4">
+                {t('value')}{' '}
+              </Typography>
             </TableCell>
           </TableRow>
         </TableHead>

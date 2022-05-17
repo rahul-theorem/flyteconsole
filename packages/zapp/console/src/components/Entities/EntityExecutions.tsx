@@ -16,7 +16,7 @@ import { compact } from 'lodash';
 import { useOnlyMyExecutionsFilterState } from 'components/Executions/filters/useOnlyMyExecutionsFilterState';
 import { executionFilterGenerator } from './generators';
 import { entityStrings } from './constants';
-import t from './strings';
+import t, { patternKey } from './strings';
 
 const useStyles = makeStyles((theme: Theme) => ({
   filtersContainer: {
@@ -78,8 +78,8 @@ export const EntityExecutions: React.FC<EntityExecutionsProps> = ({
 
   return (
     <>
-      <Typography className={styles.header} variant="h6">
-        {t('allExecutionsChartTitle', entityStrings[id.resourceType])}
+      <Typography className={styles.header} variant="h3">
+        {t(patternKey('allExecutionsChartTitle', entityStrings[id.resourceType]))}
       </Typography>
       <div className={styles.filtersContainer}>
         <ExecutionFilters
