@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import { useCommonStyles } from 'components/common/styles';
 import { WaitForData } from 'components/common/WaitForData';
 import { useNamedEntity } from 'components/hooks/useNamedEntity';
-import { NamedEntityMetadata, ResourceIdentifier } from 'models/Common/types';
+import { NamedEntityMetadata, ResourceIdentifier, Variable } from 'models/Common/types';
 import * as React from 'react';
 import reactLoadingSkeleton from 'react-loading-skeleton';
 import { ReactJsonViewWrapper } from 'components/common/ReactJsonView';
@@ -45,6 +45,8 @@ const InputsAndOuputs: React.FC<{
     [id, id.resourceType],
   );
 
+  // to render the input and output,
+  // need to fetch the latest version and get the input and ouptut data
   const versions = useEntityVersions(
     { ...id, version: '' },
     {
@@ -54,12 +56,15 @@ const InputsAndOuputs: React.FC<{
     },
   );
 
-  let inputs, outputs;
+  let inputs: Record<string, Variable> | undefined;
+  let outputs: Record<string, Variable> | undefined;
+
   if ((versions?.value?.[0]?.closure as TaskClosure)?.compiledTask?.template) {
     const template = (versions?.value?.[0]?.closure as TaskClosure)?.compiledTask?.template;
     inputs = template?.interface?.inputs?.variables;
     outputs = template?.interface?.outputs?.variables;
   }
+
   return (
     <WaitForData {...versions}>
       {inputs && (
@@ -75,6 +80,7 @@ const InputsAndOuputs: React.FC<{
     </WaitForData>
   );
 };
+
 /** Fetches and renders the description for a given Entity (LaunchPlan,Workflow,Task) ID */
 export const EntityDescription: React.FC<{
   id: ResourceIdentifier;
