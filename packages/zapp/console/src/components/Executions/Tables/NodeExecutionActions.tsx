@@ -4,7 +4,7 @@ import * as React from 'react';
 import InputsAndOutputsIcon from '@material-ui/icons/Tv';
 import RerunIcon from '@material-ui/icons/Autorenew';
 import { LaunchForm } from 'components/Launch/LaunchForm/LaunchForm';
-import { ResourceIdentifier, ResourceType } from 'models/Common/types';
+import { Identifier, ResourceIdentifier, ResourceType } from 'models/Common/types';
 import { NodeExecutionsTableState } from './types';
 import { useNodeExecutionContext } from '../contextProvider/NodeExecutionDetails';
 import { NodeExecutionDetails } from '../types';
@@ -46,6 +46,8 @@ export const NodeExecutionActions: React.FC<{
     });
   }, []);
 
+  const id: Identifier = details?.taskTemplate?.id;
+
   return (
     <>
       <div>
@@ -53,16 +55,25 @@ export const NodeExecutionActions: React.FC<{
           <InputsAndOutputsIcon />
         </IconButton>
         <IconButton
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             setShowLaunchForm(true);
           }}
         >
           <RerunIcon />
         </IconButton>
       </div>
-      {details?.taskTemplate?.id && (
-        <Dialog scroll="paper" maxWidth="sm" fullWidth={true} open={showLaunchForm}>
-          <LaunchForm onClose={onCancelLaunch} {...getLaunchProps(details?.taskTemplate?.id)} />
+      {id && (
+        <Dialog
+          scroll="paper"
+          maxWidth="sm"
+          fullWidth={true}
+          open={showLaunchForm}
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
+          <LaunchForm onClose={onCancelLaunch} {...getLaunchProps(id)} />
         </Dialog>
       )}
     </>

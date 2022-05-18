@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { IconButton, Typography, Tab, Tabs } from '@material-ui/core';
+import { IconButton, Typography, Tab, Tabs, Button } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Close from '@material-ui/icons/Close';
 import ArrowBackIos from '@material-ui/icons/ArrowBackIos';
@@ -390,6 +390,9 @@ export const NodeExecutionDetailsPanelContent: React.FC<NodeExecutionDetailsProp
           </Typography>
           {statusContent}
           {!dag && detailsContent}
+          <div>
+            <Button>RERUN</Button>
+          </div>
         </div>
       </header>
       {dag ? <WorkflowTabs nodeId={nodeExecutionId.nodeId} dagData={dag} /> : tabsContent}
