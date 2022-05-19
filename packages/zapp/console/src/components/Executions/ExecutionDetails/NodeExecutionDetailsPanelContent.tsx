@@ -26,6 +26,8 @@ import { DumpJSON } from 'components/common/DumpJSON';
 import { dNode } from 'models/Graph/types';
 import { NodeExecutionPhase, TaskExecutionPhase } from 'models/Execution/enums';
 import { transformWorkflowToKeyedDag, getNodeNameFromDag } from 'components/WorkflowGraph/utils';
+import { LaunchFormDialog } from 'components/Launch/LaunchForm/LaunchFormDialog';
+import { ResourceIdentifier } from 'models/Common/types';
 import { NodeExecutionCacheStatus } from '../NodeExecutionCacheStatus';
 import { makeListTaskExecutionsQuery, makeNodeExecutionQuery } from '../nodeExecutionQueries';
 import { NodeExecutionDetails } from '../types';
@@ -227,7 +229,7 @@ export const NodeExecutionDetailsPanelContent: React.FC<NodeExecutionDetailsProp
   const styles = useStyles();
   const queryClient = useQueryClient();
   const detailsContext = useNodeExecutionContext();
-
+  const [showLaunchForm, setShowLaunchForm] = React.useState(false);
   const [isReasonsVisible, setReasonsVisible] = useState<boolean>(false);
   const [dag, setDag] = useState<any>(null);
   const [details, setDetails] = useState<NodeExecutionDetails | undefined>();
@@ -376,26 +378,48 @@ export const NodeExecutionDetailsPanelContent: React.FC<NodeExecutionDetailsProp
 
   const displayName = details?.displayName ?? <Skeleton />;
 
+  const id: ResourceIdentifier | undefined = details?.taskTemplate?.id as
+    | ResourceIdentifier
+    | undefined;
+
   return (
-    <section className={styles.container}>
-      <header className={styles.header}>
-        <div className={styles.headerContent}>
-          {headerTitle}
-          <Typography
-            className={classnames(commonStyles.textWrapped, styles.displayId)}
-            variant="subtitle1"
-            color="textSecondary"
-          >
-            {dag ? getNodeNameFromDag(dag, nodeExecutionId.nodeId) : displayName}
-          </Typography>
-          {statusContent}
-          {!dag && detailsContent}
-          <div>
-            <Button>RERUN</Button>
+    <>
+      <section className={styles.container}>
+        <header className={styles.header}>
+          <div className={styles.headerContent}>
+            {headerTitle}
+            <Typography
+              className={classnames(commonStyles.textWrapped, styles.displayId)}
+              variant="subtitle1"
+              color="textSecondary"
+            >
+              {dag ? getNodeNameFromDag(dag, nodeExecutionId.nodeId) : displayName}
+            </Typography>
+            {statusContent}
+            {!dag && detailsContent}
+            <div>
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowLaunchForm(true);
+                }}
+              >
+                RERUN
+              </Button>
+            </div>
           </div>
-        </div>
-      </header>
-      {dag ? <WorkflowTabs nodeId={nodeExecutionId.nodeId} dagData={dag} /> : tabsContent}
-    </section>
+        </header>
+        {dag ? <WorkflowTabs nodeId={nodeExecutionId.nodeId} dagData={dag} /> : tabsContent}
+      </section>
+      {id && (
+        <LaunchFormDialog
+          id={id}
+          showLaunchForm={showLaunchForm}
+          setShowLaunchForm={setShowLaunchForm}
+        />
+      )}
+    </>
   );
 };

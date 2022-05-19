@@ -17,28 +17,25 @@ function getLaunchProps(id: ResourceIdentifier) {
 /** Renders a link that, when clicked, will trigger selection of the
  * given NodeExecution.
  */
-export const NodeExecutionActions: React.FC<{
+export const LaunchFormDialog: React.FC<{
   className?: string;
-  id: Identifier;
-}> = ({ className, id }) => {
-  const [showLaunchForm, setShowLaunchForm] = React.useState(false);
+  id: ResourceIdentifier;
+  showLaunchForm: any;
+  setShowLaunchForm: any;
+}> = ({ className, id, showLaunchForm, setShowLaunchForm }) => {
   const onCancelLaunch = () => setShowLaunchForm(false);
 
   return (
-    <>
-      {id && (
-        <Dialog
-          scroll="paper"
-          maxWidth="sm"
-          fullWidth={true}
-          open={showLaunchForm}
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-        >
-          <LaunchForm onClose={onCancelLaunch} {...getLaunchProps(id)} />
-        </Dialog>
-      )}
-    </>
+    <Dialog
+      scroll="paper"
+      maxWidth="sm"
+      fullWidth={true}
+      open={showLaunchForm}
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
+    >
+      <LaunchForm onClose={onCancelLaunch} {...getLaunchProps(id)} />
+    </Dialog>
   );
 };
